@@ -1,6 +1,6 @@
 const jwt=require("jsonwebtoken");
 const verifyToken=async(req,res,next)=>{
-    const token=req.header.token;
+    const token=req.headers.token;
     if(token){
     try{
      const acsesstoken=token.split(" ")[1];
@@ -26,5 +26,15 @@ const verifyTokenaAndAuthorization=(req,res,next)=>{
          }
     });
     
+};
+const verifyTokenaAndAdmin=(req,res,next)=>{
+    verifyToken(req,res,()=>{
+        if(req.user.isAdmin){
+            next();
+         }else{
+            res.status(403).json("You are not allowed to do it");
+         }
+    });
+    
 }
-module.exports={verifyToken,verifyTokenaAndAuthorization};
+module.exports={verifyToken,verifyTokenaAndAuthorization,verifyTokenaAndAdmin};
