@@ -1,6 +1,6 @@
 const router=require("express").Router();
 const Product=require("../models/Product");
-const { verifyTokenaAndAuthorization, verifyTokenaAndAdmin } = require("../verify");
+const { verifyTokenaAndAuthorization, verifyTokenaAndAdmin,verifyToken } = require("../verify");
 //Add a Product
 router.post('/newproduct',verifyTokenaAndAdmin,async(req,res)=>{
     const product=new Product(req.body);
@@ -39,7 +39,7 @@ router.get('/getproduct/:id',async(req,res)=>{
     }
 });
 //getting all product
-router.get('/getallproduct',verifyTokenaAndAdmin,async(req,res)=>{
+router.get('/getallproduct',verifyToken,async(req,res)=>{
     const qNew=req.query.new;
     const qCategory=req.query.category;
     try{
